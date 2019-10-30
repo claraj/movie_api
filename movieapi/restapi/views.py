@@ -14,14 +14,11 @@ def homepage(request):
 
 
 class MovieViewSet(viewsets.ModelViewSet):
-    # queryset = Movie.objects.filter(user=request.user).order_by('name')
-    # queryset = Movie.objects.all().order_by('name')
 
     serializer_class = MovieSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # return self.request.user.movies.all()
         return Movie.objects.filter(user=self.request.user).order_by('name')
 
     def create(self, request):
@@ -30,5 +27,4 @@ class MovieViewSet(viewsets.ModelViewSet):
             movie = Movie(name=request.data['name'], rating=request.data['rating'], user=request.user).save()
             return Response(movie, status=status.HTTP_201_CREATED)
         except IntegrityError as e:
-            print(e)
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
