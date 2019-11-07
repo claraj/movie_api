@@ -27,4 +27,4 @@ class MovieViewSet(viewsets.ModelViewSet):
             movie = Movie(name=request.data['name'], rating=request.data['rating'], user=request.user).save()
             return Response(movie, status=status.HTTP_201_CREATED)
         except IntegrityError as e:
-            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+            return Response('duplicate key ' + str(e), status=status.HTTP_400_BAD_REQUEST)
