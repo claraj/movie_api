@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.utils import IntegrityError
 from django.http import HttpResponse
+from django.core.exceptions import ValidationError
 
 
 def homepage(request):
@@ -24,8 +25,13 @@ class MovieViewSet(viewsets.ModelViewSet):
     def create(self, request):
         try:
             print("creating", request.data)
-            movie = Movie(name=request.data['name'], rating=request.data['rating'], user=request.user).save()
+            movie = Movie(name=request.data['name'], rating=request.data['rating'], user=request.user)
+            movie.full_clean()
+            movie.save()
             return Response(movie, status=status.HTTP_201_CREATED)
+        except ValidationError as e:
+            print('Invalid request ' + str(e))
+            return Response('Invalid data. Rating must be between 0 and 5', status=status.HTTP_400_BAD_REQUEST)
         except IntegrityError as e:
             print('Duplicate movie name submitted' + str(e))
             return Response('duplicate movie names not permitted', status=status.HTTP_400_BAD_REQUEST)
