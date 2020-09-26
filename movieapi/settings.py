@@ -137,5 +137,5 @@ STATIC_ROOT = 'static'
 
 # Django database settings 
 
-# import django_heroku
-# django_heroku.settings(locals())
+import django_heroku
+django_heroku.settings(locals())
