@@ -30,11 +30,11 @@ Press Control+C to stop the server.
 
 ### Example API calls
 
-GET http://127.0.0.1:8080/api/movies/   All movies  
-GET http://127.0.0.1:8080/api/movies/1/   Movie with ID 1  
-POST http://127.0.0.1:8080/api/movies/   Create a new movie  
-PATCH http://127.0.0.1:8080/api/movies/1/   Edit movie 1   
-DELETE http://127.0.0.1:8080/api/movies/1/   Delete movie 1   
+GET http://127.0.0.1:8080/api/movies/   **Get all movies**  
+GET http://127.0.0.1:8080/api/movies/1/   **Get movie with ID 1**  
+POST http://127.0.0.1:8080/api/movies/   **Create a new movie**  
+PATCH http://127.0.0.1:8080/api/movies/1/   **Edit movie 1**   
+DELETE http://127.0.0.1:8080/api/movies/1/   **Delete movie 1**   
 
 The trailing slashes for POST, PATCH are important otherwise the API server will redirect to GET requests. 
 
