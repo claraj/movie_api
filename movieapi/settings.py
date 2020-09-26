@@ -29,6 +29,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+APPEND_SLASH = False   # Don't require a trailing slash for request URLs
+
+
 # Application definition
 
 INSTALLED_APPS = [
