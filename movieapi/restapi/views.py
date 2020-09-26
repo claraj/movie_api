@@ -26,12 +26,12 @@ class MovieViewSet(viewsets.ModelViewSet):
         try:
             print("creating", request.data)
             movie = Movie(name=request.data['name'], rating=request.data['rating'], user=request.user)
-            movie.clean()
+            movie.full_clean()
             movie.save()
-            return Response(movie, status=status.HTTP_201_CREATED)
+            return Response(MovieSerializer(movie).data, status=status.HTTP_201_CREATED)
         except ValidationError as e:
-            print('Invalid request ' + str(e))
-            return Response('Invalid data. Movie name must be unique. Rating must be between 0 and 5', status=status.HTTP_400_BAD_REQUEST)
+            print('Invalid request, validation error ' + str(e))
+            return Response({'error': 'Invalid data. Movie name must be unique. Rating must be between 0 and 5.'}, status=status.HTTP_400_BAD_REQUEST)
         except IntegrityError as e:
-            print('Duplicate movie name submitted' + str(e))
-            return Response('duplicate movie names not permitted', status=status.HTTP_400_BAD_REQUEST)
+            print('Ivnavlid request, ntegrity error ' + str(e))
+            return Response({'error': 'Invalid data. Movie name must be unique. Rating must be between 0 and 5.'}, status=status.HTTP_400_BAD_REQUEST)
